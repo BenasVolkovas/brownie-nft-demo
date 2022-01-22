@@ -1,0 +1,11 @@
+{
+    "name": "CORGI",
+    "description": "An adorable CORGI pup!",
+    "image": "https://ipfs.io/ipfs/QmTXAC3815xUSwUnyMYpCuNKukSebo73Yh8dj6fqyVqVDN?filename=corgi.png",
+    "attributes": [
+        {
+            "trait_type": "cuteness",
+            "value": 100
+        }
+    ]
+}
