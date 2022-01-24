@@ -4,6 +4,7 @@ from web3 import Web3
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache", "hardhat", "ganache-local"]
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
+CLONE_MAPPING = {0: "DRAGON", 1: "PRISONER", 2: "SPY"}
 
 # Get account depending on active network chain
 def get_account(index=None, id=None):
@@ -78,3 +79,7 @@ def fund_with_link(
     print(f"Funded contract {contractAddress}")
 
     return tx
+
+
+def get_clone_type(cloneNumber):
+    return CLONE_MAPPING[cloneNumber]

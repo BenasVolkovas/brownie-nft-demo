@@ -22,6 +22,7 @@ def deploy_and_create():
     creatingTx = advancedCollectible.createCollectible({"from": account})
     creatingTx.wait(1)
     print(f"New collectible created")
+    return advancedCollectible, creatingTx
 
 
 def main():
