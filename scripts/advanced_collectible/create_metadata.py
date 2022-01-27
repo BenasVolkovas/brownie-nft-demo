@@ -24,9 +24,9 @@ def create_metadata():
             collectibleMetadata["name"] = cloneType
             collectibleMetadata["description"] = f"Powerful {cloneType} clone."
             imagePath = f"./img/{cloneType.lower().replace('_', '-')}.png"
-            # imageUri = upload_to_ipfs(imagePath)
+            imageUri = upload_to_ipfs(imagePath)
             # collectibleMetadata["image"] = imageUri
-            print(collectibleMetadata)
+            # print(collectibleMetadata)
 
 
 def upload_to_ipfs(filepath):
@@ -38,6 +38,10 @@ def upload_to_ipfs(filepath):
         response = requests.post(ipfsUrl + endpoint, files={"file": imageBinary})
         ipfsHash = response.json()["Hash"]
         filename = filepath.split("/")[-1]
+        imageUri = f"ipfs://{ipfsHash}?filename={filename}"
+        print(imageUri)
+
+        return imageUri
 
 
 def main():
