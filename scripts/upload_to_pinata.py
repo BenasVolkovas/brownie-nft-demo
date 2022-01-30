@@ -11,7 +11,7 @@ HEADERS = {
 
 
 def upload_to_pinata():
-    filepath = "./img/dragon.png"
+    filepath = "./img/prisoner.png"
     filename = filepath.split("/")[-1]
 
     with Path(filepath).open("rb") as fp:
@@ -21,7 +21,11 @@ def upload_to_pinata():
             files={"file": (filename, imageBinary)},
             headers=HEADERS,
         )
-        print(response.json())
+        ipfsHash = response.json()["IpfsHash"]
+        imageUri = f"https://ipfs.io/ipfs/{ipfsHash}?filename={filename}"
+        print(imageUri)
+
+        return imageUri
 
 
 def main():
