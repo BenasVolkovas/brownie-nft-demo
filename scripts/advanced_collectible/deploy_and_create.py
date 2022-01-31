@@ -21,6 +21,7 @@ def deploy_and_create():
     fund_with_link(advancedCollectible.address)
     creatingTx = advancedCollectible.createCollectible({"from": account})
     creatingTx.wait(1)
+
     print(f"New collectible created")
     return advancedCollectible, creatingTx
 
