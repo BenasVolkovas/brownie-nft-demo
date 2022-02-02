@@ -2,7 +2,6 @@ from scripts.helpful_scripts import (
     get_account,
     get_contract,
     fund_with_link,
-    OPENSEA_URL,
 )
 from brownie import AdvancedCollectible, config, network
 

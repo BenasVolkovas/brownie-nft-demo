@@ -1,11 +1,6 @@
 from brownie import network, AdvancedCollectible
 from scripts.helpful_scripts import OPENSEA_URL, get_account, get_clone_type
-
-cloneMetadata = {
-    "DRAGON": "https://ipfs.io/ipfs/QmW2VoXYy9KNnpeb4XK9F2Qk4gvfrFRdGPfyJBtZ3FwKSk?filename=0-DRAGON.json",
-    "SPY": "https://ipfs.io/ipfs/QmZGMxQRJMS4R6xzqYCaA4UxLW61pS97HoBYioFghi6pbe?filename=1-SPY.json",
-    # "PRISONER": "https://ipfs.io/ipfs/QmZGMxQRJMS4R6xzqYCaA4UxLW61pS97HoBYioFghi6pbe?filename=1-SPY.json",
-}
+from metadata import clone_to_metadata
 
 
 def set_token(tokenId, nftContract, tokenURI):
@@ -26,7 +21,7 @@ def set_token_uri():
 
         if not advancedCollectible.tokenURI(tokenId).startswith("https://"):
             print(f"Setting tokenURI of {tokenId}")
-            set_token(tokenId, advancedCollectible, cloneMetadata[cloneType])
+            set_token(tokenId, advancedCollectible, clone_to_metadata[cloneType])
 
 
 def main():

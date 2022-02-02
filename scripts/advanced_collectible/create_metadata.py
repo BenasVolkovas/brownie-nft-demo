@@ -1,16 +1,10 @@
 from brownie import AdvancedCollectible, network
 from scripts.helpful_scripts import get_clone_type
+from scripts.upload_to_pinata import upload_to_pinata
 from metadata.sample_metadata import metadataTemplate
 from pathlib import Path
 import requests
 import json
-import os
-
-cloneToImageUri = {
-    "DRAGON": "https://ipfs.io/ipfs/QmUR5wDiKfSVgMg7w1dq6uZPHxfmQ72F5sPKCJg6HqdZkF?filename=dragon.png",
-    "SPY": "https://ipfs.io/ipfs/QmPHxyT344dTCmA3fJvVz5LBKx8FqQdhLtpHYLVFZmG1HT?filename=spy.png",
-    "PRISONER": "https://ipfs.io/ipfs/QmNbpZvmCyb39zXSG1yn7DeqjZqgEUKewgqpWZi5Lbndyf?filename=prisoner.png",
-}
 
 
 def create_metadata():
@@ -34,13 +28,7 @@ def create_metadata():
 
             # Upload image to ipfs
             imagePath = f"./img/{cloneType.lower().replace('_', '-')}.png"
-
-            # Don't actually need to use it. Only makes code little faster
-            if os.getenv("UPLOAD_IPFS") == "true":
-                imageUri = upload_to_ipfs(imagePath)
-            else:
-                imageUri = cloneToImageUri[cloneType]
-
+            imageUri = upload_to_pinata(imagePath, cloneType)
             collectibleMetadata["image"] = imageUri
 
             # Dump all metadata to its own file
@@ -48,22 +36,21 @@ def create_metadata():
                 json.dump(collectibleMetadata, file)
 
             # Upload metadata to ipfs
-            if os.getenv("UPLOAD_IPFS") == "true":
-                upload_to_ipfs(metadataFileName)
+            upload_to_pinata(metadataFileName, cloneType)
 
 
-def upload_to_ipfs(filepath):
-    with Path(filepath).open("rb") as fp:
-        imageBinary = fp.read()
-        ipfsUrl = "http://127.0.0.1:5001"
-        endpoint = "/api/v0/add"
-        response = requests.post(ipfsUrl + endpoint, files={"file": imageBinary})
-        ipfsHash = response.json()["Hash"]
-        filename = filepath.split("/")[-1]
-        imageUri = f"https://ipfs.io/ipfs/{ipfsHash}?filename={filename}"
-        print(imageUri)
+# def upload_to_ipfs(filepath):
+#     with Path(filepath).open("rb") as fp:
+#         imageBinary = fp.read()
+#         ipfsUrl = "http://127.0.0.1:5001"
+#         endpoint = "/api/v0/add"
+#         response = requests.post(ipfsUrl + endpoint, files={"file": imageBinary})
+#         ipfsHash = response.json()["Hash"]
+#         filename = filepath.split("/")[-1]
+#         imageUri = f"https://ipfs.io/ipfs/{ipfsHash}?filename={filename}"
+#         print(imageUri)
 
-        return imageUri
+#         return imageUri
 
 
 def main():

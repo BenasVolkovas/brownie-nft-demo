@@ -1,4 +1,5 @@
 from pathlib import Path
+from metadata import clone_to_metadata
 import os
 import requests
 
@@ -10,12 +11,11 @@ HEADERS = {
 }
 
 
-def upload_to_pinata():
-    filepath = "./img/prisoner.png"
-    filename = filepath.split("/")[-1]
-
+def upload_to_pinata(filepath, cloneType):
     with Path(filepath).open("rb") as fp:
         imageBinary = fp.read()
+        filename = filepath.split("/")[-1]
+
         response = requests.post(
             PINATA_BASE_URL + PIN_FILE_ENDPOINT,
             files={"file": (filename, imageBinary)},
@@ -25,6 +25,9 @@ def upload_to_pinata():
         imageUri = f"https://ipfs.io/ipfs/{ipfsHash}?filename={filename}"
         print(imageUri)
 
+        if filename[-5:] == ".json":
+            clone_to_metadata[cloneType] = imageUri
+        
         return imageUri
 
 

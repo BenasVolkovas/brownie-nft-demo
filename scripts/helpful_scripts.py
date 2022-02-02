@@ -70,7 +70,7 @@ def deploy_mocks():
 
 
 def fund_with_link(
-    contractAddress, account=None, link_token=None, amount=Web3.toWei(0.3, "ether")
+    contractAddress, account=None, link_token=None, amount=Web3.toWei(0.1, "ether")
 ):  # 0.1 LINK
     account = account if account else get_account()
     linkToken = link_token if link_token else get_contract("link_token")
