@@ -1,6 +1,6 @@
 from pathlib import Path
-from metadata import clone_to_metadata
 import os
+import json
 import requests
 
 PINATA_BASE_URL = "https://api.pinata.cloud"
@@ -26,8 +26,11 @@ def upload_to_pinata(filepath, cloneType):
         print(imageUri)
 
         if filename[-5:] == ".json":
-            clone_to_metadata[cloneType] = imageUri
-        
+            cloneToMetadata = open("./metadata/clone_to_metadata.json", "r")
+            data = json.load(cloneToMetadata)
+            data[cloneType] = imageUri
+            writeJsonFile = open("./metadata/clone_to_metadata.json", "w")
+            json.dump(data, writeJsonFile)
         return imageUri
 
 

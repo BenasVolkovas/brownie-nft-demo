@@ -2,5 +2,5 @@ metadataTemplate = {
     "name": "",
     "description": "",
     "image": "",
-    "attributes": [{"trait_type": "power", "value": 86}],
+    "attributes": [{ "trait_type": "power", "value": 86 }]
 }

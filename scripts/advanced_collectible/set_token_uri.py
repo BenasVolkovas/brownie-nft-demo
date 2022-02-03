@@ -1,6 +1,6 @@
 from brownie import network, AdvancedCollectible
 from scripts.helpful_scripts import OPENSEA_URL, get_account, get_clone_type
-from metadata import clone_to_metadata
+import json
 
 
 def set_token(tokenId, nftContract, tokenURI):
@@ -16,12 +16,16 @@ def set_token_uri():
     advancedCollectible = AdvancedCollectible[-1]
     numberOfCollectibles = advancedCollectible.tokenCounter()
     print(f"Currently have {numberOfCollectibles} collectibles")
+
+    cloneToMetadata = open("./metadata/clone_to_metadata.json", "r")
+    data = json.load(cloneToMetadata)
+
     for tokenId in range(numberOfCollectibles):
         cloneType = get_clone_type(advancedCollectible.tokenIdToClone(tokenId))
 
         if not advancedCollectible.tokenURI(tokenId).startswith("https://"):
             print(f"Setting tokenURI of {tokenId}")
-            set_token(tokenId, advancedCollectible, clone_to_metadata[cloneType])
+            set_token(tokenId, advancedCollectible, data[cloneType])
 
 
 def main():
